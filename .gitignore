@@ -2,3 +2,6 @@
 !zsh/
 !alacritty/
 !tmux/
+
+# os
+DS_Store
