@@ -5,3 +5,5 @@ keybinding:
   universal:
     confirmInEditor: <c-s>
     filteringMenu: <c-f>
+
+# test
