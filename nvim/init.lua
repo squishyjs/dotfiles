@@ -1907,13 +1907,13 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap("n", "<leader>N", ":Navbuddy<CR>", { noremap = true, silent = true })
 
 -- Toggle Neogit
-vim.api.nvim_set_keymap("n", "<leader>G", ":Neogit<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>Gn", ":Neogit<CR>", { noremap = true, silent = true })
 
 -- Toggle AST
 vim.api.nvim_set_keymap("n", "<leader>i", ":InspectTree<CR>", { noremap = true, silent = true })
 
 -- Toggle gitsigns
-vim.api.nvim_set_keymap("n", "<leader>g", ":Gitsigns<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>Gs", ":Gitsigns<CR>", { noremap = true, silent = true })
 
 -- Telescope live grep
 vim.api.nvim_set_keymap(
@@ -1922,6 +1922,28 @@ vim.api.nvim_set_keymap(
 	"<cmd>Telescope live_grep<CR>",
 	{ noremap = true, silent = true, desc = "Fuzzy find word across files" }
 )
+
+-- Some telescope git stuff
+-- Open tracked files in the current Git repository
+vim.api.nvim_set_keymap("n", "<leader>gf", ":Telescope git_files<CR>", { noremap = true, silent = true })
+
+-- Show Git status (changed, staged, untracked files)
+vim.api.nvim_set_keymap("n", "<leader>gs", ":Telescope git_status<CR>", { noremap = true, silent = true })
+
+-- Browse commit history for the entire repository
+vim.api.nvim_set_keymap("n", "<leader>gc", ":Telescope git_commits<CR>", { noremap = true, silent = true })
+
+-- Browse commit history for the current file (buffer)
+vim.api.nvim_set_keymap("n", "<leader>gb", ":Telescope git_bcommits<CR>", { noremap = true, silent = true })
+
+-- List, switch, and manage Git branches
+vim.api.nvim_set_keymap("n", "<leader>gB", ":Telescope git_branches<CR>", { noremap = true, silent = true })
+
+-- View and apply Git stashes
+vim.api.nvim_set_keymap("n", "<leader>gS", ":Telescope git_stash<CR>", { noremap = true, silent = true })
+
+-- View Git blame information (line-by-line history)
+vim.api.nvim_set_keymap("n", "<leader>gl", ":Telescope git_blame<CR>", { noremap = true, silent = true })
 
 -- -- Toggle FZF
 -- vim.api.nvim_set_keymap("n", "<leader>F", ":FZF<CR>", { noremap = true, silent = true })
