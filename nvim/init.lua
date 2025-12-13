@@ -23,8 +23,6 @@ J\_____/J\______/FJ__L  J__LJ__L \\__LJ\______J
 vim.opt.termguicolors = true
 
 vim.opt.termguicolors = true
--- Disable deprecated warning messages
-vim.deprecate = function() end
 
 -- Control scroll set to 10
 vim.o.scroll = 8
