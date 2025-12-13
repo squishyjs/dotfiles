@@ -377,6 +377,25 @@ require("lazy").setup({
 		end,
 	},
 
+	{
+
+		"folke/which-key.nvim",
+		event = "VeryLazy",
+		config = function()
+			local wk = require("which-key")
+
+			-- Setup which-key (keep default or customize)
+			wk.setup()
+
+			-- Add your key mappings
+			wk.add({
+				{ "<leader>g", group = "Git Telescope" },
+				{ "<leader>G", group = "Git Actions" },
+				{ "<leader>s", group = "Search" },
+			})
+		end,
+	},
+
 	-- WEB-DEV-ICONS
 	{
 		"nvim-tree/nvim-web-devicons",
