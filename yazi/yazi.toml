@@ -5,3 +5,8 @@ show_hidden = true
 show_dir_first = true
 # file sorting method
 sort_by = "mtime"
+
+[opener]
+edit = [
+  { run = 'nvim "$@"', block = true }
+]
