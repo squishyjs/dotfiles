@@ -2082,6 +2082,9 @@ vim.cmd([[highlight Visual guibg=#f9d9b4 guifg=none, cterm=reverse]])
 vim.cmd([[highlight TodoBgNOTE gui=bold guifg=#1d2021 guibg=#81c793]])
 vim.cmd([[highlight TodoFgNOTE guifg=#81c793]])
 
+-- Custom TODO highlights
+vim.cmd([[highlight TodoBgTODO gui=bold guifg=#f9d9b4 guibg=#008080]])
+
 ---------------------------------------------------------------------
 -- Red Text Whitespace Highlighting
 vim.api.nvim_create_augroup("WhitespaceInsertHighlight", { clear = true })
