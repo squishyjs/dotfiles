@@ -1,7 +1,0 @@
-[manager]
-# show hidden files
-show_hidden = true
-# show directories first
-show_dir_first = true
-# file sorting method
-sort_by = "mtime"
