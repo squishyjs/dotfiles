@@ -23,7 +23,7 @@ vim.opt.termguicolors = true
 
 vim.opt.termguicolors = true
 
--- Control scroll set to 10
+-- Control scroll set to 8
 vim.o.scroll = 8
 
 -- Enable modeline for individual files (c++ primarily)
