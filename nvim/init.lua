@@ -1888,7 +1888,7 @@ require("lazy").setup({
 
 -- Custom (Auto) Spacing (in Neovim Buffer) for C/C++
 vim.api.nvim_create_autocmd("FileType", {
-	pattern = { "cpp", "hpp", "c", "objc", "objcpp" },
+	pattern = { "cpp", "hpp", "c", "objc", "objcpp", "h" },
 	callback = function()
 		vim.bo.shiftwidth = 4
 		vim.bo.tabstop = 4
