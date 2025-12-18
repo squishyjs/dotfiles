@@ -234,11 +234,11 @@ alt-shift-l = ['join-with right', 'mode main']
 "W" = "^aw2521hfl$" # work
 "M" = "^aw2521hfl$" # generic
 "Y" = "^aw2521hfl$" # generic
-"1" = "^aw2521hfl$" # generic
-"2" = "^aw2521hfl$" # generic
-"3" = "^aw2521hfl$" # generic
-"4" = "^aw2521hfl$" # generic
 "5" = "^aw2521hfl$" # generic
+"6" = "^aw2521hfl$" # generic
+"7" = "^aw2521hfl$" # generic
+"8" = "^aw2521hfl$" # generic
+"9" = "^aw2521hfl$" # generic
 #------------------------------
 
 #-------- alienware -----------
@@ -254,8 +254,8 @@ alt-shift-l = ['join-with right', 'mode main']
 "O" = "^24g2w1g4$" # outlook
 "Q" = "^24g2w1g4$" # generic
 "X" = "^24g2w1g4$" # generic
-"6" = "^24g2w1g4$" # generic
-"7" = "^24g2w1g4$" # generic
-"8" = "^24g2w1g4$" # generic
-"9" = "^24g2w1g4$" # generic
+"1" = "^24g2w1g4$" # generic
+"2" = "^24g2w1g4$" # generic
+"3" = "^24g2w1g4$" # generic
+"4" = "^24g2w1g4$" # generic
 #------------------------------
