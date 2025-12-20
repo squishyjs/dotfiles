@@ -118,6 +118,9 @@ alias ff="fzf --height 40% --layout reverse --border --tmux bottom"
 # Makefile
 alias mclean="make clean"
 
+# Tui-Journal
+alias note="tjournal"
+
 # Generic C build (c17)
 function build_c() {
   if [[ -z "$1" ]]; then
