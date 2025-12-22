@@ -1493,10 +1493,21 @@ require("lazy").setup({
 	},
 
 	{
-		"cappyzawa/trim.nvim",
+		"zbirenbaum/copilot-cmp",
+		event = "InsertEnter",
 		config = function()
-			require("trim").setup({})
+			require("copilot_cmp").setup()
 		end,
+		dependencies = {
+			"zbirenbaum/copilot.lua",
+			cmd = "Copilot",
+			config = function()
+				require("copilot").setup({
+					suggestion = { enabled = false }, -- Disable the default ghost text
+					panel = { enabled = false },
+				})
+			end,
+		},
 	},
 
 	-- AUTOCOMPLETION
