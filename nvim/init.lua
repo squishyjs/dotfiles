@@ -402,6 +402,11 @@ require("lazy").setup({
 		},
 	},
 
+	{
+		"cappyzawa/trim.nvim",
+		opts = {},
+	},
+
 	-- NVIM TREE (similar to Neotree)
 	{
 		"nvim-tree/nvim-tree.lua",
