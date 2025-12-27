@@ -23,6 +23,9 @@ export LDFLAGS="-L/opt/homebrew/opt/ruby/lib"
 export CPPFLAGS="-I/opt/homebrew/opt/ruby/include"
 export PKG_CONFIG_PATH="/opt/homebrew/opt/ruby/lib/pkgconfig"
 
+# FZF allow tab query
+export FZF_DEFAULT_OPTS="--bind=tab:down,btab:up"
+
 # zsh Theme Load
 ZSH_THEME="powerlevel10k/powerlevel10k"
 
@@ -112,8 +115,23 @@ alias pi="pip install"
 alias attach="tmux attach"
 alias detach="tmux detach"
 
-# Fzf
-alias ff="fzf --height 40% --layout reverse --border --tmux bottom"
+# FZF
+# USE THE BELOW IF WANT TO IGNORE MULTIPLE DIRS (i.e extend prune list)
+# -path "./.git" -o -path "./node_modules" -o -path "./.venv"
+alias ff='sh -c '"'"'
+sel=$(find . -path "./.git" -prune -o -type f -print | sed "s|^\./||" | fzf --height 40% --layout reverse --border --tmux bottom) || exit
+[ -n "$sel" ] || exit
+mt=$(file -b --mime-type -- "./$sel")
+case "$mt" in
+  text/*|application/json|application/xml|application/x-yaml|application/javascript|application/typescript|application/x-shellscript)
+    nvim -- "./$sel"
+    ;;
+  *)
+    open -- "./$sel"
+    ;;
+esac
+'"'"''
+alias fsh="history | fzf"
 
 # Makefile
 alias mclean="make clean"
