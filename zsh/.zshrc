@@ -119,7 +119,11 @@ alias detach="tmux detach"
 # USE THE BELOW IF WANT TO IGNORE MULTIPLE DIRS (i.e extend prune list)
 # -path "./.git" -o -path "./node_modules" -o -path "./.venv"
 alias ff='sh -c '"'"'
-sel=$(find . -path "./.git" -prune -o -type f -print | sed "s|^\./||" | fzf --height 40% --layout reverse --border --tmux bottom) || exit
+sel=$(find . \
+  \( -path "./.git" -o -path "./gcloud" -o -path "./venv" \) -prune \
+  -o -type f -print \
+| sed "s|^\./||" \
+| fzf --height 40% --layout reverse --border --tmux bottom) || exit
 [ -n "$sel" ] || exit
 mt=$(file -b --mime-type -- "./$sel")
 case "$mt" in
