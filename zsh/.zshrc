@@ -135,7 +135,8 @@ case "$mt" in
     ;;
 esac
 '"'"''
-alias fsh="history | fzf"
+# alias fsh="history | fzf"
+alias fsh='fc -rl 1 | fzf --tac | sed -E "s/^[[:space:]]*[0-9]+[[:space:]]+//" | sed "s/^[[:space:]]*//" | xargs -I{} zsh -lc "{}"'
 
 # Makefile
 alias mclean="make clean"
