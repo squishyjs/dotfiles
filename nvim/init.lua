@@ -2081,6 +2081,35 @@ vim.api.nvim_set_keymap(
 	{ desc = "View Git diff", noremap = true, silent = true }
 )
 
+-- Additional (Diffview) Commands
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>gvc",
+	":DiffviewClose<CR>",
+	{ desc = "Close Git view", noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>gvt",
+	":DiffviewToggleFiles<CR>",
+	{ desc = "Toggle Files", noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>gvf",
+	":DiffviewFocusFiles<CR>",
+	{ desc = "Focus Files", noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>gvr",
+	":DiffviewRefresh<CR>",
+	{ desc = "Refresh Files", noremap = true, silent = true }
+)
+
 -- Tab Close
 vim.api.nvim_set_keymap("n", "<leader>cl", ":tabclose<CR>", { desc = "Close tab", noremap = true, silent = true })
 
