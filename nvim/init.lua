@@ -376,7 +376,7 @@ require("lazy").setup({
 				function()
 					require("gitgraph").draw({}, { all = true, max_count = 5000 })
 				end,
-				desc = "GitGraph - Draw",
+				desc = "View Git-Graph",
 			},
 		},
 	},
@@ -2073,16 +2073,8 @@ vim.api.nvim_set_keymap(
 	{ desc = "View Git stash", noremap = true, silent = true }
 )
 
--- View Git blame information (line-by-line history)
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>gl",
-	":Telescope git_blame<CR>",
-	{ desc = "View Current Git Diff ", noremap = true, silent = true }
-)
-
 -- See Git Diff
-vim.api.nvim_set_keymap("n", "<leader>gd", ":DiffviewOpen", { desc = "Git blame", noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>gd", ":DiffviewOpen<CR>", { desc = "Git blame", noremap = true, silent = true })
 
 -- -- Toggle FZF
 -- vim.api.nvim_set_keymap("n", "<leader>F", ":FZF<CR>", { noremap = true, silent = true })
