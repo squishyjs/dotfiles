@@ -863,6 +863,10 @@ require("lazy").setup({
 				}))
 			end, { desc = "[F]uzzy [F]ind in current buffer" })
 
+			vim.keymap.set("n", "<leader>fh", function()
+				require("telescope.builtin").help_tags()
+			end, { desc = "Find help tags" })
+
 			-- search current open files
 			vim.keymap.set("n", "<leader>s/", function()
 				builtin.live_grep({
@@ -2026,7 +2030,7 @@ vim.api.nvim_set_keymap(
 	"n",
 	"<leader>gf",
 	":Telescope git_files<CR>",
-	{ desc = "Git files (tracked)", noremap = true, silent = true }
+	{ desc = "View Git files (tracked)", noremap = true, silent = true }
 )
 
 -- Show Git status (changed, staged, untracked files)
@@ -2034,7 +2038,7 @@ vim.api.nvim_set_keymap(
 	"n",
 	"<leader>gs",
 	":Telescope git_status<CR>",
-	{ desc = "Git status", noremap = true, silent = true }
+	{ desc = "View Git status", noremap = true, silent = true }
 )
 
 -- Browse commit history for the entire repository
@@ -2042,7 +2046,7 @@ vim.api.nvim_set_keymap(
 	"n",
 	"<leader>gc",
 	":Telescope git_commits<CR>",
-	{ desc = "Git commit history", noremap = true, silent = true }
+	{ desc = "View Git commit history", noremap = true, silent = true }
 )
 
 -- Browse commit history for the current file (buffer)
@@ -2050,7 +2054,7 @@ vim.api.nvim_set_keymap(
 	"n",
 	"<leader>gb",
 	":Telescope git_bcommits<CR>",
-	{ desc = "Git commits (buffer)", noremap = true, silent = true }
+	{ desc = "View Git commits (buffer)", noremap = true, silent = true }
 )
 
 -- List, switch, and manage Git branches
@@ -2058,7 +2062,7 @@ vim.api.nvim_set_keymap(
 	"n",
 	"<leader>gB",
 	":Telescope git_branches<CR>",
-	{ desc = "Git branches", noremap = true, silent = true }
+	{ desc = "View Git branches", noremap = true, silent = true }
 )
 
 -- View and apply Git stashes
@@ -2066,7 +2070,7 @@ vim.api.nvim_set_keymap(
 	"n",
 	"<leader>gS",
 	":Telescope git_stash<CR>",
-	{ desc = "Git stash", noremap = true, silent = true }
+	{ desc = "View Git stash", noremap = true, silent = true }
 )
 
 -- View Git blame information (line-by-line history)
@@ -2074,8 +2078,11 @@ vim.api.nvim_set_keymap(
 	"n",
 	"<leader>gl",
 	":Telescope git_blame<CR>",
-	{ desc = "Git blame", noremap = true, silent = true }
+	{ desc = "View Current Git Diff ", noremap = true, silent = true }
 )
+
+-- See Git Diff
+vim.api.nvim_set_keymap("n", "<leader>gd", ":DiffviewOpen", { desc = "Git blame", noremap = true, silent = true })
 
 -- -- Toggle FZF
 -- vim.api.nvim_set_keymap("n", "<leader>F", ":FZF<CR>", { noremap = true, silent = true })
