@@ -2074,7 +2074,12 @@ vim.api.nvim_set_keymap(
 )
 
 -- See Git Diff
-vim.api.nvim_set_keymap("n", "<leader>gd", ":DiffviewOpen<CR>", { desc = "Git blame", noremap = true, silent = true })
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>gd",
+	":DiffviewOpen<CR>",
+	{ desc = "View Git diff", noremap = true, silent = true }
+)
 
 -- Tab Close
 vim.api.nvim_set_keymap("n", "<leader>cl", ":tabclose<CR>", { desc = "Close tab", noremap = true, silent = true })
