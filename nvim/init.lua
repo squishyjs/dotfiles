@@ -173,6 +173,18 @@ vim.keymap.set("n", "<right>", '<cmd>echo "Use l to move!!"<CR>')
 vim.keymap.set("n", "<up>", '<cmd>echo "Use k to move!!"<CR>')
 vim.keymap.set("n", "<down>", '<cmd>echo "Use j to move!!"<CR>')
 
+-- Going Up!
+vim.keymap.set("n", "gg", function()
+	vim.notify("Going Up!", vim.log.levels.INFO)
+	vim.cmd.normal({ "gg", bang = true })
+end)
+
+-- Going Down!
+vim.keymap.set("n", "G", function()
+	vim.notify("Going Down!", vim.log.levels.INFO)
+	vim.cmd.normal({ "G", bang = true })
+end)
+
 -- Keybinds to make split navigation easier.
 --  Use CTRL+<hjkl> to switch between windows
 --
@@ -2008,7 +2020,7 @@ vim.api.nvim_set_keymap(
 	{ noremap = true, silent = true, desc = "Fuzzy find word across files" }
 )
 
--- Some telescope git stuff
+-- Telescope git stuff
 -- Open tracked files in the current Git repository
 vim.api.nvim_set_keymap(
 	"n",
