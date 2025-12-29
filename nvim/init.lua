@@ -2076,6 +2076,9 @@ vim.api.nvim_set_keymap(
 -- See Git Diff
 vim.api.nvim_set_keymap("n", "<leader>gd", ":DiffviewOpen<CR>", { desc = "Git blame", noremap = true, silent = true })
 
+-- Tab Close
+vim.api.nvim_set_keymap("n", "<leader>cl", ":tabclose<CR>", { desc = "Close tab", noremap = true, silent = true })
+
 -- -- Toggle FZF
 -- vim.api.nvim_set_keymap("n", "<leader>F", ":FZF<CR>", { noremap = true, silent = true })
 
