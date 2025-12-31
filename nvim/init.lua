@@ -1501,6 +1501,20 @@ require("lazy").setup({
 		},
 	},
 
+	-- LSP_SIGNATURE
+	{
+		"ray-x/lsp_signature.nvim",
+		event = "InsertEnter",
+		opts = {
+			bind = true,
+			handler_opts = {
+				border = "rounded",
+			},
+			hint_prefix = "",
+		},
+		-- or use config
+		-- config = function(_, opts) require'lsp_signature'.setup({you options}) end
+	},
 	-- YAZI NVIM
 	---@type LazySpec
 	{
@@ -2166,6 +2180,15 @@ end, { desc = "Previous todo comment" })
 vim.keymap.set("n", "]t", function()
 	require("todo-comments").jump_next({ keywords = { "ERROR", "WARNING" } })
 end, { desc = "Next error/warning todo comment" })
+
+-- Toggle Lsp Signature
+vim.keymap.set({ "n" }, "<C-k>", function()
+	require("lsp_signature").toggle_float_win()
+end, { silent = true, noremap = true, desc = "toggle signature" })
+
+vim.keymap.set({ "n" }, "<Leader>k", function()
+	vim.lsp.buf.signature_help()
+end, { silent = true, noremap = true, desc = "toggle signature" })
 
 -- vim.cmd("TransparentEnable")
 
