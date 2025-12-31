@@ -1515,6 +1515,7 @@ require("lazy").setup({
 		-- or use config
 		-- config = function(_, opts) require'lsp_signature'.setup({you options}) end
 	},
+
 	-- YAZI NVIM
 	---@type LazySpec
 	{
@@ -2275,6 +2276,13 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.softtabstop = 4
 		vim.opt_local.expandtab = true
 	end,
+})
+
+-- cmp-nvim-lsp-signature-help (for writign functions)
+require("cmp").setup({
+	sources = {
+		{ name = "nvim_lsp_signature_help" },
+	},
 })
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
