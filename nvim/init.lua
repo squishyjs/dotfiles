@@ -19,6 +19,12 @@
 
 --]]
 
+-- GLOBAL DEFAULTS (for most programming langauges - 4 indent)
+vim.opt.expandtab = true
+vim.opt.tabstop = 4
+vim.opt.shiftwidth = 4
+vim.opt.softtabstop = 4
+vim.opt.smartindent = true
 vim.opt.termguicolors = true
 
 vim.opt.termguicolors = true
@@ -1120,7 +1126,7 @@ require("lazy").setup({
 						cmd = {
 							"clangd",
 							"--header-insertion=iwyu",
-							"--fallback-style=none",
+							"--fallback-style={IndentWidth: 4, TabWidth: 4, UseTab: Never}",
 							"--completion-style=detailed",
 							"--function-arg-placeholders",
 							"--pretty",
@@ -1129,30 +1135,13 @@ require("lazy").setup({
 							"--all-scopes-completion",
 							"--pch-storage=memory",
 							"--background-index",
-							"--completion-style=detailed",
 						},
-						filetypes = { "cpp", "hpp", "c", "objc", "objcpp" },
-						root_dir = require("lspconfig").util.root_pattern("compile_commandsjson", ".git"),
+						filetypes = { "c", "cpp", "objc", "objcpp", "hpp" },
+						root_dir = require("lspconfig").util.root_pattern("compile_commands.json", ".git"),
 						capabilities = capabilities,
-						settings = {
-							clangd = {
-								cmd = {
-									"clangd",
-									"--header-insertion=iwyu",
-									"--fallback-style=none",
-									"--completion-style=detailed",
-									"--function-arg-placeholders",
-									"--pretty",
-									"-j=4",
-									"--inlay-hints",
-									"--all-scopes-completion",
-									"--pch-storage=memory",
-									"--background-index",
-									"--completion-style=detailed",
-								},
-								completion = { include = true },
-								fallbackFlags = { "-std=c++17" },
-							},
+						-- settings are typically not needed for clangd unless you use clangd extensions
+						init_options = {
+							fallbackFlags = { "-std=c++17" },
 						},
 					},
 					-- Rust
