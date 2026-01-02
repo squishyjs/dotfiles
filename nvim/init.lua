@@ -1709,7 +1709,9 @@ require("lazy").setup({
 						group_index = 0,
 					},
 					{ name = "nvim_lsp" },
+					{ name = "nvim_lsp_signature_help" },
 					{ name = "luasnip" },
+					{ name = "buffer" },
 					{ name = "path" },
 				},
 			})
@@ -2278,11 +2280,5 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
--- cmp-nvim-lsp-signature-help (for writign functions)
-require("cmp").setup({
-	sources = {
-		{ name = "nvim_lsp_signature_help" },
-	},
-})
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
