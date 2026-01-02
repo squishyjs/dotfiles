@@ -90,8 +90,11 @@ export TERM="alacritty"
 # Neofetch
 alias mac="neofetch"
 
-# Config
-alias reload-config="source ~/.config/zsh/.zshrc"
+# Zsh Config
+alias reload-zsh="source ~/.config/zsh/.zshrc"
+
+# Tmux Config
+alias reload-tmux="tmux source-file ~/.config/tmux/.tmux.conf"
 
 # Zoxide
 alias cdi="zi"
