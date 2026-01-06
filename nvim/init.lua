@@ -1339,6 +1339,13 @@ require("lazy").setup({
 		cmd = { "Typr", "TyprStats" },
 	},
 
+	-- SpeedTyper
+	{
+		"NStefan002/speedtyper.nvim",
+		branch = "v2",
+		lazy = false,
+	},
+
 	-- Harpoon
 	{
 		"ThePrimeagen/harpoon",
