@@ -84,8 +84,8 @@ alias gpl="git pull"
 # Alacritty
 export TERM="alacritty"
 
-# Neovim
-# alias vim="nvim"
+# Dir Buffer (history)
+alias list_dir_buffer="dirs -v"
 
 # Neofetch
 alias mac="neofetch"
