@@ -114,6 +114,9 @@ alias clang_all="clang-format -i *.cpp *.hpp *.h"
 # Pip
 alias pi="pip install"
 
+# Clear
+alias claer="clear"
+
 # Tmux
 alias attach="tmux attach"
 alias detach="tmux detach"
