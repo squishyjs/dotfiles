@@ -407,6 +407,12 @@ require("lazy").setup({
 		},
 	},
 
+	-- Diffview.nvim
+	{
+		"sindrets/diffview.nvim",
+		dependencies = { "nvim-lua/plenary.nvim" },
+	},
+
 	-- ALPHA NVIM (Dashboard)
 	{
 		"goolord/alpha-nvim",
@@ -985,6 +991,20 @@ require("lazy").setup({
 			vim.api.nvim_create_autocmd("LspAttach", {
 				group = vim.api.nvim_create_augroup("kickstart-lsp-attach", { clear = true }),
 				callback = function(event)
+					local buf = event.buf
+					local bt = vim.bo[buf].buftype
+					local ft = vim.bo[buf].filetype
+
+					-- Never allow LSP in Diffview or nofile buffers
+					if bt == "nofile" or ft == "diff" or (ft and ft:match("^Diffview")) then
+						vim.schedule(function()
+							vim.notify(("Skipping LSP for bt=%s ft=%s"):format(bt, ft), vim.log.levels.WARN)
+						end)
+						vim.defer_fn(function()
+							pcall(vim.lsp.buf_detach_client, buf, event.data.client_id)
+						end, 0)
+						return
+					end
 					-- NOTE: Remember that Lua is a real programming language, and as such it is possible
 					-- to define small helper and utility functions so you don't have to repeat yourself.
 					--
@@ -1175,6 +1195,13 @@ require("lazy").setup({
 							},
 						},
 					},
+
+					-- MARKDOWN
+					markdown_oxide = {
+						filetypes = { "markdown", "markdown.mdx" },
+						capabilities = capabilities,
+					},
+
 					-- HTML LSP
 					html = {
 						cmd = { "vscode-html-language-server", "--stdio" },
@@ -2284,6 +2311,39 @@ vim.api.nvim_create_autocmd("FileType", {
 		vim.opt_local.shiftwidth = 4
 		vim.opt_local.softtabstop = 4
 		vim.opt_local.expandtab = true
+	end,
+})
+
+vim.api.nvim_create_autocmd("LspAttach", {
+	callback = function(ev)
+		local buf = ev.buf
+		local bt = vim.bo[buf].buftype
+		local ft = vim.bo[buf].filetype
+
+		local is_diffview = ft:match("^Diffview") ~= nil
+		local is_diff = ft == "diff"
+		local is_special = (bt == "nofile") or (bt == "prompt") or (bt == "help")
+
+		if is_diffview or is_diff or is_special then
+			-- Defer to ensure the client is fully attached before detaching
+			vim.defer_fn(function()
+				pcall(vim.lsp.buf_detach_client, buf, ev.data.client_id)
+			end, 0)
+		end
+	end,
+})
+
+local grp = vim.api.nvim_create_augroup("john-no-lsp-in-diffview", { clear = true })
+
+vim.api.nvim_create_autocmd("FileType", {
+	group = grp,
+	pattern = { "DiffviewFiles", "DiffviewFilePanel", "DiffviewFileHistory", "diff" },
+	callback = function(args)
+		local buf = args.buf
+		-- Detach ALL clients from these buffers
+		for _, client in ipairs(vim.lsp.get_clients({ bufnr = buf })) do
+			pcall(vim.lsp.buf_detach_client, buf, client.id)
+		end
 	end,
 })
 
