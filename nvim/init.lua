@@ -435,7 +435,13 @@ require("lazy").setup({
 
 			-- Set menu
 			dashboard.section.buttons.val = {
-				dashboard.button("SPC e", "  > New File", "<cmd>ene<CR>"),
+				dashboard.button("SPC e", "  > New File", function()
+					vim.ui.input({ prompt = "New file name: " }, function(name)
+						if name and name ~= "" then
+							vim.cmd("edit " .. vim.fn.fnameescape(name))
+						end
+					end)
+				end),
 				dashboard.button("SPC n", "  > Toggle file explorer", "<cmd>Neotree<CR>"),
 				dashboard.button("SPC ff", "󰱼  > Find File", "<cmd>Telescope find_files<CR>"),
 				dashboard.button("SPC fw", "  > Find Word"),
