@@ -29,6 +29,9 @@ vim.opt.termguicolors = true
 
 vim.opt.termguicolors = true
 
+-- Remove blinking
+vim.opt.guicursor = ""
+
 -- Control scroll set to 8
 vim.o.scroll = 8
 
