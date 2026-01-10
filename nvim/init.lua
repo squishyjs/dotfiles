@@ -436,7 +436,7 @@ require("lazy").setup({
 			-- Set menu
 			dashboard.section.buttons.val = {
 				dashboard.button("SPC e", "  > New File", function()
-					vim.ui.input({ prompt = "Enter File Name: " }, function(name)
+					vim.ui.input({ prompt = "File Name: " }, function(name)
 						if name and name ~= "" then
 							vim.cmd("edit " .. vim.fn.fnameescape(name))
 						end
