@@ -470,6 +470,7 @@ require("lazy").setup({
 				{ "<leader>g", group = "Git Telescope" },
 				{ "<leader>G", group = "Git Actions" },
 				{ "<leader>s", group = "Search" },
+				{ "<leader>e", desc = "New File Buffer" },
 			})
 		end,
 	},
