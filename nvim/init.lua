@@ -27,8 +27,6 @@ vim.opt.softtabstop = 4
 vim.opt.smartindent = true
 vim.opt.termguicolors = true
 
-vim.opt.termguicolors = true
-
 -- Control scroll set to 8
 vim.o.scroll = 8
 
