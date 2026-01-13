@@ -440,7 +440,7 @@ require("lazy").setup({
 						end
 					end)
 				end),
-				dashboard.button("SPC n", "  > Toggle file explorer", "<cmd>Neotree<CR>"),
+				dashboard.button("SPC n", "  > Toggle file explorer", "<cmd>NvimTreeToggle<CR>"),
 				dashboard.button("SPC ff", "󰱼  > Find File", "<cmd>Telescope find_files<CR>"),
 				dashboard.button("SPC fw", "  > Find Word"),
 				dashboard.button("SPC wr", "󰁯  > Restore Session For Current Directory", "<cmd>SessionRestore<CR>"),
@@ -498,7 +498,11 @@ require("lazy").setup({
 			"nvim-tree/nvim-web-devicons",
 		},
 		config = function()
-			require("nvim-tree").setup({})
+			require("nvim-tree").setup({
+				view = {
+					side = "right",
+				},
+			})
 		end,
 	},
 
@@ -2053,12 +2057,7 @@ vim.api.nvim_set_keymap("n", "<leader>l", ":Lazy<CR>", { noremap = true, silent 
 vim.api.nvim_set_keymap("n", "<leader>m", ":Mason<CR>", { noremap = true, silent = true })
 
 -- Toggle neotree
-vim.api.nvim_set_keymap(
-	"n",
-	"<leader>n",
-	":Neotree filesystem reveal right toggle<CR>",
-	{ noremap = true, silent = true }
-)
+vim.api.nvim_set_keymap("n", "<leader>n", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
 
 -- Toggle navbuddy
 vim.api.nvim_set_keymap("n", "<leader>N", ":Navbuddy<CR>", { noremap = true, silent = true })
