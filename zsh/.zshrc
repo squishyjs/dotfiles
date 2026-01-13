@@ -233,3 +233,5 @@ export LIBRARY_PATH=/opt/homebrew/lib/
 
 # Ruby
 export PATH="/opt/homebrew/opt/ruby/bin:$PATH"
+
+export PATH="$HOME/.local/bin:$PATH"
