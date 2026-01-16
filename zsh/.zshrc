@@ -85,7 +85,7 @@ alias gpl="git pull"
 export TERM="alacritty"
 
 # Bat
-alias cat="bat --theme=base16-256"
+alias cat="bat --theme=TwoDark"
 
 # Dir Buffer (history)
 alias list_dir_buffer="dirs -v"
