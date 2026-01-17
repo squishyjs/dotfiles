@@ -104,6 +104,9 @@ vim.schedule(function()
 	vim.opt.clipboard = "unnamedplus"
 end)
 
+-- Alias ":W" -> ":w" (write to buffer)
+vim.cmd([[cabbrev W w]])
+
 -- Enable break indent
 vim.opt.breakindent = true
 
