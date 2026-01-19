@@ -10,3 +10,7 @@ sort_by = "mtime"
 edit = [
   { run = 'nvim "$@"', block = true }
 ]
+
+[preview]
+max_width = 2400
+max_height = 3600
