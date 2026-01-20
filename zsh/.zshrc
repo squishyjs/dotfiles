@@ -144,6 +144,35 @@ case "$mt" in
     ;;
 esac
 '"'"''
+
+# Fuzzy switch git branches
+unalias gbs 2>/dev/null
+gbs() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return 1
+
+  local root branch
+  root="$(git rev-parse --show-toplevel 2>/dev/null)" || return 1
+
+  branch="$(
+    git -C "$root" for-each-ref --format='%(refname:short)' refs/heads |
+    ROOT="$root" fzf --height=60% --reverse --prompt='Branch > ' \
+      --preview-window 'right:60%,wrap' \
+      --preview "ref=\$(printf '%s' \"{}\" \
+                   | tr -d '\r' \
+                   | sed -e \"s/^'//\" -e \"s/'\$//\" -e 's/^\"//' -e 's/\"$//'); \
+                git -C \"\$ROOT\" --no-pager log -n 12 --oneline --decorate --color=always \"\$ref\" 2>&1" \
+      --bind 'tab:down,shift-tab:up,ctrl-j:down,ctrl-k:up'
+  )" || return 0
+
+  # Sanitize selection similarly before switching
+  branch="${branch//$'\r'/}"
+  branch="${branch#\'}"; branch="${branch%\'}"
+  branch="${branch#\"}"; branch="${branch%\"}"
+
+  [[ -n "$branch" ]] || return 0
+  git -C "$root" switch -- "$branch"
+}
+
 # alias fsh="history | fzf"
 alias fsh='fc -rl 1 | fzf --tac | sed -E "s/^[[:space:]]*[0-9]+[[:space:]]+//" | sed "s/^[[:space:]]*//" | xargs -I{} zsh -lc "{}"'
 
