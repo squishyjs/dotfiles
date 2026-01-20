@@ -124,6 +124,14 @@ alias claer="clear"
 alias attach="tmux attach"
 alias detach="tmux detach"
 
+# reload config (zsh & tmux)
+reload-config() {
+  source ~/.config/zsh/.zshrc
+  if [[ -n "$TMUX" ]] && command -v tmux >/dev/null 2>&1; then
+    tmux source-file ~/.config/tmux/.tmux.conf
+  fi
+}
+
 # FZF
 # USE THE BELOW IF WANT TO IGNORE MULTIPLE DIRS (i.e extend prune list)
 # -path "./.git" -o -path "./node_modules" -o -path "./.venv"
