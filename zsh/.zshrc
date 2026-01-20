@@ -173,6 +173,24 @@ gbs() {
   git -C "$root" switch -- "$branch"
 }
 
+# glog, but better (w/preview)
+unalias glog 2>/dev/null
+glog() {
+  git rev-parse --is-inside-work-tree >/dev/null 2>&1 || return 1
+  command -v fzf >/dev/null 2>&1 || { print -u2 "glog: fzf not found"; return 1; }
+
+  git log --graph --color=always \
+    --format="%C(auto)%h%d %s %C(black)%C(bold)%cr" "$@" |
+  fzf --ansi --no-sort --reverse --tiebreak=index \
+      --bind=ctrl-s:toggle-sort \
+      --header "enter: view, ctrl-o: checkout" \
+      --preview-window=right:60%,wrap \
+      --preview 'sha=$(echo {} | grep -o "[a-f0-9]\{7\}" | head -1); [[ -n "$sha" ]] && git show --color=always "$sha"' \
+      --bind "q:abort,ctrl-f:preview-page-down,ctrl-b:preview-page-up" \
+      --bind "ctrl-o:become(sha=\$(echo {} | grep -o \"[a-f0-9]\{7\}\" | head -1); git checkout \"\$sha\")" \
+      --bind "enter:execute(sha=\$(echo {} | grep -o \"[a-f0-9]\{7\}\" | head -1); git show --color=always \"\$sha\" | less -R)"
+}
+
 # alias fsh="history | fzf"
 alias fsh='fc -rl 1 | fzf --tac | sed -E "s/^[[:space:]]*[0-9]+[[:space:]]+//" | sed "s/^[[:space:]]*//" | xargs -I{} zsh -lc "{}"'
 
