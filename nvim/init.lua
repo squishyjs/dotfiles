@@ -1424,7 +1424,7 @@ require("lazy").setup({
 			end, { desc = "Select 4th Poon buffer" })
 
 			-- Toggle previous & next buffers stored within Harpoon list
-			vim.keymap.set("n", "<C-i>", function()
+			vim.keymap.set("n", "<C-k>", function()
 				harpoon:list():prev()
 			end, { desc = "Prev Poon Buffer" })
 			vim.keymap.set("n", "<C-n>", function()
@@ -2226,9 +2226,9 @@ vim.keymap.set("n", "]t", function()
 end, { desc = "Next error/warning todo comment" })
 
 -- Toggle Lsp Signature
-vim.keymap.set({ "n" }, "<C-k>", function()
-	require("lsp_signature").toggle_float_win()
-end, { silent = true, noremap = true, desc = "toggle signature" })
+-- vim.keymap.set({ "n" }, "<C-k>", function()
+-- 	require("lsp_signature").toggle_float_win()
+-- end, { silent = true, noremap = true, desc = "toggle signature" })
 
 vim.keymap.set({ "n" }, "<Leader>k", function()
 	vim.lsp.buf.signature_help()
