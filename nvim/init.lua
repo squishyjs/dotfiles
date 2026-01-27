@@ -1410,10 +1410,10 @@ require("lazy").setup({
 			-- 	harpoon.ui:toggle_quick_menu(harpoon:list())
 			-- end, { desc = "Toggle Poon Menu" })
 
-			vim.keymap.set("n", "<C-1>", function()
+			vim.keymap.set("n", "<C-8>", function()
 				harpoon:list():select(1)
 			end, { desc = "Select 1st Poon buffer" })
-			vim.keymap.set("n", "<C-2>", function()
+			vim.keymap.set("n", "<C-9>", function()
 				harpoon:list():select(2)
 			end, { desc = "Select 2nd Poon buffer" })
 			vim.keymap.set("n", "<C-n>", function()
@@ -1424,10 +1424,10 @@ require("lazy").setup({
 			end, { desc = "Select 4th Poon buffer" })
 
 			-- Toggle previous & next buffers stored within Harpoon list
-			vim.keymap.set("n", "<C-S-P>", function()
+			vim.keymap.set("n", "<C-i>", function()
 				harpoon:list():prev()
 			end, { desc = "Prev Poon Buffer" })
-			vim.keymap.set("n", "<C-S-N>", function()
+			vim.keymap.set("n", "<C-n>", function()
 				harpoon:list():next()
 			end, { desc = "Next Poon Buffer" })
 			harpoon:setup({})
