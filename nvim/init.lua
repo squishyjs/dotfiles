@@ -444,10 +444,10 @@ require("lazy").setup({
 					end)
 				end),
 				dashboard.button("SPC n", "  > Toggle file explorer", "<cmd>NvimTreeToggle<CR>"),
-				dashboard.button("SPC F", "󰱼  > Find File", "<cmd>Telescope find_files<CR>"),
-				dashboard.button("SPC fw", "  > Find Word"),
-				dashboard.button("SPC wr", "󰁯  > Restore Session For Current Directory", "<cmd>SessionRestore<CR>"),
-				dashboard.button("q", "  > Quit NVIM", "<cmd>qa<CR>"),
+				dashboard.button("SPC F", "󰱼  > Find file", "<cmd>Telescope find_files<CR>"),
+				dashboard.button("SPC fw", "  > Find word"),
+				dashboard.button("SPC sn", "󰁯  > Find neovim files"),
+				dashboard.button("q", "  > Quit neovim", "<cmd>qa<CR>"),
 			}
 
 			-- Send config to alpha
