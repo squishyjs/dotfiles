@@ -194,7 +194,6 @@ alt-shift-l = ['join-with right', 'mode main']
 # MAIN ASSIGNMENT
 [workspace-to-monitor-force-assignment]
 # mac screen
-"A" = "^built-in retina display$" # alacritty
 "N" = "^built-in retina display$" # notion
 "T" = "^built-in retina display$" # teams
 "D" = "^built-in retina display$" # discord
@@ -230,6 +229,7 @@ alt-shift-l = ['join-with right', 'mode main']
 # "W" = "dell p2722he"
 # "M" = "dell p2722he"
 # home
+"A" = "^aw2521hfl$" # alacritty
 "U" = "^aw2521hfl$" # uni
 "W" = "^aw2521hfl$" # work
 "M" = "^aw2521hfl$" # generic
