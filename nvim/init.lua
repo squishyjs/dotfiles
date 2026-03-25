@@ -2057,7 +2057,7 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap("n", "<leader>l", ":Lazy<CR>", { noremap = true, silent = true })
 
 -- Toggle Mason
-vim.api.nvim_set_keymap("n", "<leader>m", ":Mason<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>M", ":Mason<CR>", { noremap = true, silent = true })
 
 -- Toggle neotree
 vim.api.nvim_set_keymap("n", "<leader>n", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
@@ -2073,6 +2073,9 @@ vim.api.nvim_set_keymap("n", "<leader>i", ":InspectTree<CR>", { noremap = true, 
 
 -- Toggle gitsigns
 vim.api.nvim_set_keymap("n", "<leader>Gs", ":Gitsigns<CR>", { noremap = true, silent = true })
+
+-- Toggle gitsigns
+vim.api.nvim_set_keymap("n", "<leader>m", ":Marks<CR>", { noremap = true, silent = true, desc = "Show Marks" })
 
 -- Telescope live grep
 vim.api.nvim_set_keymap(
