@@ -436,7 +436,7 @@ require("lazy").setup({
 
 			-- Set menu
 			dashboard.section.buttons.val = {
-				dashboard.button("SPC e", "  > New file", function()
+				dashboard.button("SPC e", "  > New File", function()
 					vim.ui.input({ prompt = "File Name: " }, function(name)
 						if name and name ~= "" then
 							vim.cmd("edit " .. vim.fn.fnameescape(name))
@@ -1856,14 +1856,6 @@ require("lazy").setup({
 	},
 
 	{
-		"martinsione/darkplus.nvim",
-	},
-
-	{
-		"lunarvim/darkplus.nvim",
-	},
-
-	{
 		"folke/trouble.nvim",
 		opts = {}, -- for default options, refer to the configuration section for custom setup.
 		cmd = "Trouble",
@@ -2065,7 +2057,7 @@ vim.api.nvim_set_keymap(
 vim.api.nvim_set_keymap("n", "<leader>l", ":Lazy<CR>", { noremap = true, silent = true })
 
 -- Toggle Mason
-vim.api.nvim_set_keymap("n", "<leader>M", ":Mason<CR>", { noremap = true, silent = true })
+vim.api.nvim_set_keymap("n", "<leader>m", ":Mason<CR>", { noremap = true, silent = true })
 
 -- Toggle neotree
 vim.api.nvim_set_keymap("n", "<leader>n", ":NvimTreeToggle<CR>", { noremap = true, silent = true })
@@ -2081,9 +2073,6 @@ vim.api.nvim_set_keymap("n", "<leader>i", ":InspectTree<CR>", { noremap = true, 
 
 -- Toggle gitsigns
 vim.api.nvim_set_keymap("n", "<leader>Gs", ":Gitsigns<CR>", { noremap = true, silent = true })
-
--- Search for Marks
-vim.api.nvim_set_keymap("n", "<leader>m", ":Marks<CR>", { noremap = true, silent = true, desc = "Search Marks" })
 
 -- Telescope live grep
 vim.api.nvim_set_keymap(
@@ -2182,6 +2171,7 @@ vim.api.nvim_set_keymap(
 -- Tab Close
 vim.api.nvim_set_keymap("n", "<leader>cl", ":tabclose<CR>", { desc = "Close tab", noremap = true, silent = true })
 
+-- -- Toggle FZF
 -- vim.api.nvim_set_keymap("n", "<leader>F", ":FZF<CR>", { noremap = true, silent = true })
 
 -- Toggle (Whitespace) Trim
