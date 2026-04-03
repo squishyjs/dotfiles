@@ -1616,24 +1616,6 @@ require("lazy").setup({
 		end,
 	},
 
-	-- {
-	-- 	"zbirenbaum/copilot-cmp",
-	-- 	event = "InsertEnter",
-	-- 	config = function()
-	-- 		require("copilot_cmp").setup()
-	-- 	end,
-	-- 	dependencies = {
-	-- 		"zbirenbaum/copilot.lua",
-	-- 		cmd = "Copilot",
-	-- 		config = function()
-	-- 			require("copilot").setup({
-	-- 				suggestion = { enabled = false }, -- Disable the default ghost text
-	-- 				panel = { enabled = false },
-	-- 			})
-	-- 		end,
-	-- 	},
-	-- },
-
 	-- AUTOCOMPLETION
 	{
 		"hrsh7th/nvim-cmp",
@@ -1892,6 +1874,28 @@ require("lazy").setup({
 			},
 		},
 	},
+
+	-- OIL NVIM (buffer filesystem manager)
+	{
+		"stevearc/oil.nvim",
+		---@module 'oil'
+		---@type oil.SetupOpts
+		opts = {},
+		-- Optional dependencies
+		dependencies = { { "nvim-mini/mini.icons", opts = {} } },
+		-- dependencies = { "nvim-tree/nvim-web-devicons" }, -- use if you prefer nvim-web-devicons
+		-- Lazy loading is not recommended because it is very tricky to make it work correctly in all situations.
+		lazy = false,
+	},
+
+	-- UNDO TREE
+	{
+		"mbbill/undotree",
+		config = function()
+			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+		end,
+	},
+
 	-- Highlight todo, notes, etc in comments
 	{
 		"folke/todo-comments.nvim",
@@ -2076,6 +2080,9 @@ vim.api.nvim_set_keymap("n", "<leader>Gs", ":Gitsigns<CR>", { noremap = true, si
 
 -- Toggle gitsigns
 vim.api.nvim_set_keymap("n", "<leader>m", ":Marks<CR>", { noremap = true, silent = true, desc = "Show Marks" })
+
+-- Toggle Oil Nvim
+vim.api.nvim_set_keymap("n", "<leader>o", ":Oil<CR>", { noremap = true, silent = true, desc = "Open [O]il Nvim" })
 
 -- Telescope live grep
 vim.api.nvim_set_keymap(
