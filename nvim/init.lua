@@ -2177,7 +2177,12 @@ vim.keymap.set(
 	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
 	{ desc = "Replace word cursor is on globally" }
 )
-
+-- Copy filepath to the clipboard
+vim.keymap.set("n", "<leader>fp", function()
+	local filePath = vim.fn.expand("%:~") -- Gets the file path relative to the home directory
+	vim.fn.setreg("+", filePath) -- Copy the file path to the clipboard register
+	print("File path copied to clipboard: " .. filePath)
+end, { desc = "Copy file path to clipboard" })
 -- Tab Close
 vim.api.nvim_set_keymap("n", "<leader>cl", ":tabclose<CR>", { desc = "Close tab", noremap = true, silent = true })
 
