@@ -874,8 +874,8 @@ require("lazy").setup({
 			vim.keymap.set("n", "<leader>sw", builtin.grep_string, { desc = "[S]earch current [W]ord" })
 			vim.keymap.set("n", "<leader>sg", builtin.live_grep, { desc = "[S]earch by [G]rep" })
 			vim.keymap.set("n", "<leader>sd", builtin.diagnostics, { desc = "[S]earch [D]iagnostics" })
-			vim.keymap.set("n", "<leader>s.", builtin.resume, { desc = "[S]earch [R]esume" })
-			vim.keymap.set("n", "<leader>sr", builtin.oldfiles, { desc = "[S]earch Recent Files" })
+			vim.keymap.set("n", "<leader>s.", builtin.resume, { desc = "[S]earch Resume" })
+			vim.keymap.set("n", "<leader>sr", builtin.oldfiles, { desc = "[S]earch [R]ecent Files" })
 			vim.keymap.set("n", "<leader><leader>", builtin.buffers, { desc = "[ ] Find existing buffers" })
 
 			-- Slightly advanced example of overriding default behavior and theme
@@ -889,7 +889,7 @@ require("lazy").setup({
 
 			vim.keymap.set("n", "<leader>fh", function()
 				require("telescope.builtin").help_tags()
-			end, { desc = "Find help tags" })
+			end, { desc = "[F]ind [H]elp tags" })
 
 			-- search current open files
 			vim.keymap.set("n", "<leader>s/", function()
@@ -2082,7 +2082,7 @@ vim.api.nvim_set_keymap(
 	"n",
 	"<leader>fw",
 	"<cmd>Telescope live_grep<CR>",
-	{ noremap = true, silent = true, desc = "Fuzzy find word across files" }
+	{ noremap = true, silent = true, desc = "Fuzzy [F]ind [W]ord across files" }
 )
 
 -- Telescope git stuff
@@ -2182,7 +2182,7 @@ vim.keymap.set("n", "<leader>fp", function()
 	local filePath = vim.fn.expand("%:~") -- Gets the file path relative to the home directory
 	vim.fn.setreg("+", filePath) -- Copy the file path to the clipboard register
 	print("File path copied to clipboard: " .. filePath)
-end, { desc = "Copy file path to clipboard" })
+end, { desc = "Copy [F]ile [P]ath to clipboard" })
 -- Tab Close
 vim.api.nvim_set_keymap("n", "<leader>cl", ":tabclose<CR>", { desc = "Close tab", noremap = true, silent = true })
 
