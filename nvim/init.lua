@@ -2171,6 +2171,13 @@ vim.api.nvim_set_keymap(
 	{ desc = "Refresh Files", noremap = true, silent = true }
 )
 
+vim.keymap.set(
+	"n",
+	"<leader>S",
+	[[:%s/\<<C-r><C-w>\>/<C-r><C-w>/gI<Left><Left><Left>]],
+	{ desc = "Replace word cursor is on globally" }
+)
+
 -- Tab Close
 vim.api.nvim_set_keymap("n", "<leader>cl", ":tabclose<CR>", { desc = "Close tab", noremap = true, silent = true })
 
