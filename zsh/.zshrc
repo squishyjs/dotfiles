@@ -93,6 +93,9 @@ alias list_dir_buffer="dirs -v"
 # Neofetch
 alias mac="neofetch"
 
+# Fastfetch
+alias mac="fastfetch"
+
 # Zsh Config
 alias reload-zsh="source ~/.config/zsh/.zshrc"
 
