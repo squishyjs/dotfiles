@@ -302,3 +302,6 @@ export PATH="$HOME/.local/bin:$PATH"
 
 # Man Pages
 export MANPAGER='nvim +Man!'
+
+# Point to Golang binary
+export PATH=$PATH:$HOME/go/bin/
