@@ -121,9 +121,6 @@ alias clang_all="clang-format -i *.cpp *.hpp *.h"
 # Pip
 alias pi="pip install"
 
-# Opencode
-alias oc="opencode"
-
 # Clear
 alias claer="clear"
 
