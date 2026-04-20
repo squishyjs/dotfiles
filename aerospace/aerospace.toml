@@ -225,37 +225,48 @@ alt-shift-l = ['join-with right', 'mode main']
 
 #-------- ultra wide -----------
 #work
-# "U" = "dell p2722he"
-# "W" = "dell p2722he"
-# "M" = "dell p2722he"
+"A" = "dell p2722he"
+"U" = "dell p2722he"
+"W" = "dell p2722he"
+"M" = "dell p2722he"
+"Y" = "dell p2722he"
+"5" = "dell p2722he"
+"6" = "dell p2722he"
+"7" = "dell p2722he"
+"8" = "dell p2722he"
+"9" = "dell p2722he"
 # home
-"A" = "^aw2521hfl$" # alacritty
-"U" = "^aw2521hfl$" # uni
-"W" = "^aw2521hfl$" # work
-"M" = "^aw2521hfl$" # generic
-"Y" = "^aw2521hfl$" # generic
-"5" = "^aw2521hfl$" # generic
-"6" = "^aw2521hfl$" # generic
-"7" = "^aw2521hfl$" # generic
-"8" = "^aw2521hfl$" # generic
-"9" = "^aw2521hfl$" # generic
+# "A" = "^aw2521hfl$" # alacritty
+# "U" = "^aw2521hfl$" # uni
+# "W" = "^aw2521hfl$" # work
+# "M" = "^aw2521hfl$" # generic
+# "Y" = "^aw2521hfl$" # generic
+# "5" = "^aw2521hfl$" # generic
+# "6" = "^aw2521hfl$" # generic
+# "7" = "^aw2521hfl$" # generic
+# "8" = "^aw2521hfl$" # generic
+# "9" = "^aw2521hfl$" # generic
 #------------------------------
 
 #-------- alienware -----------
 #work
-# "P" = "dell p2722he"
-# "S" = "dell p2722he"
-# "O" = "dell p2722he"
-# "Q" = "dell p2722he"
-# "X" = "dell p2722he"
+"P" = "dell p2722he"
+"S" = "dell p2722he"
+"O" = "dell p2722he"
+"Q" = "dell p2722he"
+"X" = "dell p2722he"
+"1" = "dell p2722he"
+"2" = "dell p2722he"
+"3" = "dell p2722he"
+"4" = "dell p2722he"
 #home
-"P" = "^24g2w1g4$" # personal web browser
-"S" = "^24g2w1g4$" # spotify
-"O" = "^24g2w1g4$" # outlook
-"Q" = "^24g2w1g4$" # generic
-"X" = "^24g2w1g4$" # generic
-"1" = "^24g2w1g4$" # generic
-"2" = "^24g2w1g4$" # generic
-"3" = "^24g2w1g4$" # generic
-"4" = "^24g2w1g4$" # generic
+# "P" = "^24g2w1g4$" # personal web browser
+# "S" = "^24g2w1g4$" # spotify
+# "O" = "^24g2w1g4$" # outlook
+# "Q" = "^24g2w1g4$" # generic
+# "X" = "^24g2w1g4$" # generic
+# "1" = "^24g2w1g4$" # generic
+# "2" = "^24g2w1g4$" # generic
+# "3" = "^24g2w1g4$" # generic
+# "4" = "^24g2w1g4$" # generic
 #------------------------------
