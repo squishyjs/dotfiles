@@ -302,3 +302,5 @@ export MANPAGER='nvim +Man!'
 
 # Point to Golang binary
 export PATH=$PATH:$HOME/go/bin/
+
+export PATH=$PATH:/Users/john/.spicetify
