@@ -66,7 +66,6 @@ vim.api.nvim_set_keymap("n", "<leader>ee", "<cmd>Neotree<CR>", { noremap = true,
 vim.api.nvim_set_keymap("n", "<leader>ff", "<cmd>Telescope find_files<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>fs", "<cmd>Telescope live_grep<CR>", { noremap = true, silent = true })
 vim.api.nvim_set_keymap("n", "<leader>wr", "<cmd>SessionRestore<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "q", "<cmd>qa<CR>", { noremap = true, silent = true })
 
 vim.api.nvim_set_hl(0, "DiagnosticError", { fg = "red" })
 
