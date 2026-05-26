@@ -225,16 +225,16 @@ alt-shift-l = ['join-with right', 'mode main']
 
 #-------- ultra wide -----------
 #work
-# "A" = "dell p2722he"
-# "U" = "dell p2722he"
-# "W" = "dell p2722he"
-# "M" = "dell p2722he"
-# "Y" = "dell p2722he"
-# "5" = "dell p2722he"
-# "6" = "dell p2722he"
-# "7" = "dell p2722he"
-# "8" = "dell p2722he"
-# "9" = "dell p2722he"
+# "A" = "dell p2422he"
+# "U" = "dell p2422he"
+# "W" = "dell p2422he"
+# "M" = "dell p2422he"
+# "Y" = "dell p2422he"
+# "5" = "dell p2422he"
+# "6" = "dell p2422he"
+# "7" = "dell p2422he"
+# "8" = "dell p2422he"
+# "9" = "dell p2422he"
 # home
 "A" = "^aw2521hfl$" # alacritty
 "U" = "^aw2521hfl$" # uni
@@ -250,15 +250,15 @@ alt-shift-l = ['join-with right', 'mode main']
 
 #-------- alienware -----------
 #work
-# "P" = "dell p2722he"
-# "S" = "dell p2722he"
-# "O" = "dell p2722he"
-# "Q" = "dell p2722he"
-# "X" = "dell p2722he"
-# "1" = "dell p2722he"
-# "2" = "dell p2722he"
-# "3" = "dell p2722he"
-# "4" = "dell p2722he"
+# "P" = "dell p2422he"
+# "S" = "dell p2422he"
+# "O" = "dell p2422he"
+# "Q" = "dell p2422he"
+# "X" = "dell p2422he"
+# "1" = "dell p2422he"
+# "2" = "dell p2422he"
+# "3" = "dell p2422he"
+# "4" = "dell p2422he"
 #home
 "P" = "^24g2w1g4$" # personal web browser
 "S" = "^24g2w1g4$" # spotify
