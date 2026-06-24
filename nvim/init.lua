@@ -2063,6 +2063,45 @@ vim.api.nvim_create_autocmd("FileType", {
 	end,
 })
 
+-- Telescope compatibility shim for nvim-treesitter's `main` branch.
+-- Telescope (0.1.x) still calls the old master-branch API: parsers.ft_to_lang,
+-- parsers.get_parser, and the `nvim-treesitter.configs` module (is_enabled /
+-- get_module) -- all removed in the main-branch rewrite, which caused
+-- `attempt to call field 'ft_to_lang' (a nil value)`. Map them onto the native
+-- vim.treesitter API so Telescope preview/match highlighting keeps working.
+-- Safe to delete if Telescope gains main-branch support or you move
+-- nvim-treesitter back to the master branch.
+do
+	local ok, parsers = pcall(require, "nvim-treesitter.parsers")
+	if ok and type(parsers) == "table" then
+		if not parsers.ft_to_lang then
+			function parsers.ft_to_lang(ft)
+				return vim.treesitter.language.get_lang(ft) or ft
+			end
+		end
+		if not parsers.get_parser then
+			function parsers.get_parser(bufnr, lang)
+				return vim.treesitter.get_parser(bufnr, lang)
+			end
+		end
+	end
+	-- The whole `nvim-treesitter.configs` module is gone on main; inject a minimal
+	-- stand-in only if it genuinely cannot be required (future-proof against a
+	-- real module reappearing upstream).
+	if not pcall(require, "nvim-treesitter.configs") then
+		package.loaded["nvim-treesitter.configs"] = {
+			-- Only report enabled when the language actually has an installed parser,
+			-- because Telescope's treesitter_attach() calls get_parser() unguarded.
+			is_enabled = function(_, lang)
+				return lang ~= nil and lang ~= "" and #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".so", false) > 0
+			end,
+			get_module = function()
+				return { enable = true, additional_vim_regex_highlighting = false }
+			end,
+		}
+	end
+end
+
 -- Custom (Auto) Spacing (in Neovim Buffer) for C/C++
 vim.api.nvim_create_autocmd("FileType", {
 	pattern = { "cpp", "hpp", "c", "objc", "objcpp", "h" },
