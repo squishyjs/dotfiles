@@ -1313,6 +1313,59 @@ require("lazy").setup({
 					end,
 				},
 			})
+
+			-- C#: Roslyn is installed via Mason ("roslyn-language-server") but
+			-- mason-lspconfig v2 does NOT auto-enable it (it's not in v2's server
+			-- mapping), so enable it explicitly. Uses nvim-lspconfig's ready-made
+			-- lsp/roslyn_ls.lua (its `cmd` already points at the Mason binary).
+			--
+			-- By default roslyn_ls only attaches when it finds a .sln/.csproj. We
+			-- override root_dir to ALSO fall back to the git root or the file's own
+			-- folder, so standalone .cs files (no project) still get a language
+			-- server. A real project, when present, is still preferred and gives
+			-- full project-wide IntelliSense.
+			vim.lsp.config("roslyn_ls", {
+				root_dir = function(bufnr, cb)
+					local fname = vim.api.nvim_buf_get_name(bufnr)
+					-- 1) prefer a real project / solution
+					local root = vim.fs.root(bufnr, function(name)
+						return name:match("%.sln[x]?$") ~= nil or name:match("%.csproj$") ~= nil
+					end)
+					-- 2) fall back so lone .cs files still attach (single-file mode)
+					if not root then
+						root = vim.fs.root(bufnr, ".git") or vim.fs.dirname(fname)
+					end
+					cb(root)
+				end,
+
+				-- FIX (duplicate diagnostics): nvim-lspconfig's roslyn_ls ships a
+				-- refresh_diagnostics() helper that fires a raw `textDocument/diagnostic`
+				-- request WITHOUT an identifier. That result lands in a second diagnostic
+				-- namespace (…roslyn_ls.N.nil) on top of Neovim's normal per-provider pull
+				-- (…roslyn_ls.N.DocumentAnalyzerSemantic, etc.), so every diagnostic gets
+				-- rendered twice. Neutralize both call sites of that raw refresh.
+				--
+				-- 1) The default on_attach installs a BufWritePost/InsertLeave autocmd that
+				--    does the raw refresh. Native pull already refreshes on didChange, so
+				--    replace it with a no-op.
+				on_attach = function() end,
+				-- 2) After project initialization, refresh via Neovim's proper per-provider
+				--    pull (identifier-based) instead of the identifier-less raw request.
+				handlers = {
+					["workspace/projectInitializationComplete"] = function(_, _, ctx)
+						local client = vim.lsp.get_client_by_id(ctx.client_id)
+						if client then
+							for buf in pairs(client.attached_buffers) do
+								if vim.api.nvim_buf_is_loaded(buf) then
+									vim.lsp.diagnostic._refresh(buf, ctx.client_id)
+								end
+							end
+						end
+						return vim.NIL
+					end,
+				},
+			})
+			vim.lsp.enable("roslyn_ls")
 		end,
 	},
 
@@ -1892,7 +1945,11 @@ require("lazy").setup({
 	{
 		"mbbill/undotree",
 		config = function()
-			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+			vim.keymap.set("n", "<leader>u", function()
+				vim.cmd.UndotreeToggle()
+			end, {
+				desc = "UndoTree",
+			})
 		end,
 	},
 
@@ -1960,6 +2017,7 @@ require("lazy").setup({
 			require("nvim-treesitter").install({
 				"bash",
 				"c",
+				"c_sharp",
 				"cpp",
 				"css",
 				"diff",
@@ -2038,6 +2096,7 @@ vim.api.nvim_create_autocmd("FileType", {
 		"bash",
 		"sh",
 		"c",
+		"cs",
 		"cpp",
 		"css",
 		"diff",
@@ -2093,7 +2152,9 @@ do
 			-- Only report enabled when the language actually has an installed parser,
 			-- because Telescope's treesitter_attach() calls get_parser() unguarded.
 			is_enabled = function(_, lang)
-				return lang ~= nil and lang ~= "" and #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".so", false) > 0
+				return lang ~= nil
+					and lang ~= ""
+					and #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".so", false) > 0
 			end,
 			get_module = function()
 				return { enable = true, additional_vim_regex_highlighting = false }
@@ -2442,6 +2503,22 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Background Transparency
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+
+vim.lsp.config("roslyn", {
+	on_attach = function()
+		print("This will run when the server attaches!")
+	end,
+	settings = {
+		["csharp|inlay_hints"] = {
+			dotnet_enable_inlay_hints_for_object_creation_parameters = false,
+		},
+		["csharp|code_lens"] = {},
+		["csharp|completion"] = {},
+		["csharp|background_analysis"] = {},
+		["csharp|symbol_search"] = {},
+		["csharp|formatting"] = {},
+	},
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
