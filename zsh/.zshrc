@@ -157,6 +157,44 @@ case "$mt" in
 esac
 '"'"''
 
+# Fuzzy cd into a folder within the cwd (mirrors `ff`, but for dirs)
+# NOTE: must be a function, not a subshell alias, so `cd` affects this shell.
+fcd() {
+  local sel
+  sel=$(find . \
+    \( -path "./.git" -o -path "./gcloud" -o -path "./venv" \) -prune \
+    -o -type d -print \
+  | sed "s|^\./||" \
+  | fzf --height 40% --layout reverse --border --tmux bottom) || return
+  [ -n "$sel" ] || return
+  cd -- "./$sel"
+}
+
+# Yazi-style step-in/step-out directory navigator (one level at a time).
+# Enter descends into a folder, `..` goes up, `.` accepts and cd's there.
+# Because you can go up past the cwd, you can reach dirs outside it too.
+fj() {
+  local dir sel
+  dir="$(cd -- "${1:-.}" 2>/dev/null && pwd)" || return   # start dir (absolute)
+  while true; do
+    sel=$( {
+      printf '%s\n' '.  [cd here]'
+      printf '%s\n' '..'
+      find "$dir" -mindepth 1 -maxdepth 1 -type d \
+        ! -name .git ! -name gcloud ! -name venv \
+        | sed "s|^$dir/||" | sort
+    } | fzf --height 60% --layout reverse --border --tmux bottom \
+            --prompt "$dir/ > " \
+            --preview "eza --tree --level=1 --icons --color=always -- \"$dir/{}\" 2>/dev/null" \
+    ) || return
+    case "$sel" in
+      '.  [cd here]') cd -- "$dir"; return ;;   # accept
+      '..')           dir="$(dirname -- "$dir")" ;;   # step out
+      *)              dir="$dir/$sel" ;;              # step in
+    esac
+  done
+}
+
 # Fuzzy switch git branches
 unalias gbs 2>/dev/null
 gbs() {
