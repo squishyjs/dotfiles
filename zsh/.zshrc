@@ -65,8 +65,8 @@ alias ......="cd ../../../../.."
 alias l="eza -l --icons --git -a"
 alias ls="l"
 alias lt="eza --tree --level=10 --long --icons --git"
-alias ltree="eza --tree --level=2 --icons --git"
-alias ltr="eza --tree --level=10 --icons --git"
+alias ltr="eza --tree --level=2 --icons --git"
+alias ltree="eza --tree --level=10 --icons --git"
 
 # Git
 alias all="git add ."
