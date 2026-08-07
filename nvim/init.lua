@@ -2291,6 +2291,13 @@ vim.api.nvim_set_keymap(
 
 vim.api.nvim_set_keymap(
 	"n",
+	"<leader>I",
+	":Inspect<CR>",
+	{ desc = "Inspect Element Under Cursor", noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap(
+	"n",
 	"<leader>gvf",
 	":DiffviewFocusFiles<CR>",
 	{ desc = "Focus Files", noremap = true, silent = true }
