@@ -1074,7 +1074,7 @@ require("lazy").setup({
 					--
 					-- When you move your cursor, the highlights will be cleared (the second autocommand).
 					local client = vim.lsp.get_client_by_id(event.data.client_id)
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
+					if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_documentHighlight) then
 						local highlight_augroup =
 							vim.api.nvim_create_augroup("kickstart-lsp-highlight", { clear = false })
 						vim.api.nvim_create_autocmd({ "CursorHold", "CursorHoldI" }, {
@@ -1102,7 +1102,7 @@ require("lazy").setup({
 					-- code, if the language server you are using supports them
 					--
 					-- This may be unwanted, since they displace some of your code
-					if client and client.supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
+					if client and client:supports_method(vim.lsp.protocol.Methods.textDocument_inlayHint) then
 						map("<leader>ti", function()
 							vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = event.buf }))
 						end, "[T]oggle Inlay [H]ints")
@@ -1313,6 +1313,59 @@ require("lazy").setup({
 					end,
 				},
 			})
+
+			-- C#: Roslyn is installed via Mason ("roslyn-language-server") but
+			-- mason-lspconfig v2 does NOT auto-enable it (it's not in v2's server
+			-- mapping), so enable it explicitly. Uses nvim-lspconfig's ready-made
+			-- lsp/roslyn_ls.lua (its `cmd` already points at the Mason binary).
+			--
+			-- By default roslyn_ls only attaches when it finds a .sln/.csproj. We
+			-- override root_dir to ALSO fall back to the git root or the file's own
+			-- folder, so standalone .cs files (no project) still get a language
+			-- server. A real project, when present, is still preferred and gives
+			-- full project-wide IntelliSense.
+			vim.lsp.config("roslyn_ls", {
+				root_dir = function(bufnr, cb)
+					local fname = vim.api.nvim_buf_get_name(bufnr)
+					-- 1) prefer a real project / solution
+					local root = vim.fs.root(bufnr, function(name)
+						return name:match("%.sln[x]?$") ~= nil or name:match("%.csproj$") ~= nil
+					end)
+					-- 2) fall back so lone .cs files still attach (single-file mode)
+					if not root then
+						root = vim.fs.root(bufnr, ".git") or vim.fs.dirname(fname)
+					end
+					cb(root)
+				end,
+
+				-- FIX (duplicate diagnostics): nvim-lspconfig's roslyn_ls ships a
+				-- refresh_diagnostics() helper that fires a raw `textDocument/diagnostic`
+				-- request WITHOUT an identifier. That result lands in a second diagnostic
+				-- namespace (…roslyn_ls.N.nil) on top of Neovim's normal per-provider pull
+				-- (…roslyn_ls.N.DocumentAnalyzerSemantic, etc.), so every diagnostic gets
+				-- rendered twice. Neutralize both call sites of that raw refresh.
+				--
+				-- 1) The default on_attach installs a BufWritePost/InsertLeave autocmd that
+				--    does the raw refresh. Native pull already refreshes on didChange, so
+				--    replace it with a no-op.
+				on_attach = function() end,
+				-- 2) After project initialization, refresh via Neovim's proper per-provider
+				--    pull (identifier-based) instead of the identifier-less raw request.
+				handlers = {
+					["workspace/projectInitializationComplete"] = function(_, _, ctx)
+						local client = vim.lsp.get_client_by_id(ctx.client_id)
+						if client then
+							for buf in pairs(client.attached_buffers) do
+								if vim.api.nvim_buf_is_loaded(buf) then
+									vim.lsp.diagnostic._refresh(buf, ctx.client_id)
+								end
+							end
+						end
+						return vim.NIL
+					end,
+				},
+			})
+			vim.lsp.enable("roslyn_ls")
 		end,
 	},
 
@@ -1892,7 +1945,11 @@ require("lazy").setup({
 	{
 		"mbbill/undotree",
 		config = function()
-			vim.keymap.set("n", "<leader>u", vim.cmd.UndotreeToggle)
+			vim.keymap.set("n", "<leader>u", function()
+				vim.cmd.UndotreeToggle()
+			end, {
+				desc = "UndoTree",
+			})
 		end,
 	},
 
@@ -1947,47 +2004,39 @@ require("lazy").setup({
 	},
 
 	-- TREESITTER
-	{ -- Highlight, edit, and navigate code
+	{
 		"nvim-treesitter/nvim-treesitter",
+		branch = "main",
+		lazy = false,
 		build = ":TSUpdate",
-		main = "nvim-treesitter.configs", -- Sets main module to use for opts
-		-- [[ Configure Treesitter ]] See `:help nvim-treesitter`
-		opts = {
-			ensure_installed = {
+		config = function()
+			require("nvim-treesitter").setup({
+				install_dir = vim.fn.stdpath("data") .. "/site",
+			})
+
+			require("nvim-treesitter").install({
 				"bash",
+				"c",
+				"c_sharp",
 				"cpp",
 				"css",
-				"rust",
-				"python",
-				"javascript",
-				"c",
 				"diff",
 				"html",
+				"javascript",
+				"json",
 				"lua",
 				"luadoc",
 				"markdown",
 				"markdown_inline",
+				"python",
 				"query",
+				"rust",
+				"toml",
+				"typescript",
 				"vim",
 				"vimdoc",
-			},
-			-- Autoinstall languages that are not installed
-			auto_install = true,
-			highlight = {
-				enable = true,
-				-- Some languages depend on vim's regex highlighting system (such as Ruby) for indent rules.
-				--  If you are experiencing weird indenting issues, add the language to
-				--  the list of additional_vim_regex_highlighting and disabled languages for indent.
-				additional_vim_regex_highlighting = { "ruby", "javascript", "html", "typescript" },
-			},
-			indent = { enable = true, disable = { "ruby", "javascript", "html", "typescript" } },
-		},
-		-- There are additional nvim-treesitter modules that you can use to interact
-		-- with nvim-treesitter. You should go explore a few and see what interests you:
-		--
-		--    - Incremental selection: Included, see `:help nvim-treesitter-incremental-selection-mod`
-		--    - Show your current context: https://github.com/nvim-treesitter/nvim-treesitter-context
-		--    - Treesitter + textobjects: https://github.com/nvim-treesitter/nvim-treesitter-textobjects
+			})
+		end,
 	},
 
 	-- The following comments only work if you have downloaded the kickstart repo, not just copy pasted the
@@ -2037,6 +2086,82 @@ require("lazy").setup({
 		},
 	},
 })
+
+-- replace old:
+-- highlight = {
+-- enable = true,
+-- }
+vim.api.nvim_create_autocmd("FileType", {
+	pattern = {
+		"bash",
+		"sh",
+		"c",
+		"cs",
+		"cpp",
+		"css",
+		"diff",
+		"html",
+		"javascript",
+		"javascriptreact",
+		"json",
+		"lua",
+		"luadoc",
+		"markdown",
+		"markdown.mdx",
+		"python",
+		"query",
+		"rust",
+		"toml",
+		"typescript",
+		"typescriptreact",
+		"vim",
+		"vimdoc",
+	},
+	callback = function(args)
+		pcall(vim.treesitter.start, args.buf)
+	end,
+})
+
+-- Telescope compatibility shim for nvim-treesitter's `main` branch.
+-- Telescope (0.1.x) still calls the old master-branch API: parsers.ft_to_lang,
+-- parsers.get_parser, and the `nvim-treesitter.configs` module (is_enabled /
+-- get_module) -- all removed in the main-branch rewrite, which caused
+-- `attempt to call field 'ft_to_lang' (a nil value)`. Map them onto the native
+-- vim.treesitter API so Telescope preview/match highlighting keeps working.
+-- Safe to delete if Telescope gains main-branch support or you move
+-- nvim-treesitter back to the master branch.
+do
+	local ok, parsers = pcall(require, "nvim-treesitter.parsers")
+	if ok and type(parsers) == "table" then
+		if not parsers.ft_to_lang then
+			function parsers.ft_to_lang(ft)
+				return vim.treesitter.language.get_lang(ft) or ft
+			end
+		end
+		if not parsers.get_parser then
+			function parsers.get_parser(bufnr, lang)
+				return vim.treesitter.get_parser(bufnr, lang)
+			end
+		end
+	end
+	-- The whole `nvim-treesitter.configs` module is gone on main; inject a minimal
+	-- stand-in only if it genuinely cannot be required (future-proof against a
+	-- real module reappearing upstream).
+	if not pcall(require, "nvim-treesitter.configs") then
+		package.loaded["nvim-treesitter.configs"] = {
+			-- Only report enabled when the language actually has an installed parser,
+			-- because Telescope's treesitter_attach() calls get_parser() unguarded.
+			is_enabled = function(_, lang)
+				return lang ~= nil
+					and lang ~= ""
+					and #vim.api.nvim_get_runtime_file("parser/" .. lang .. ".so", false) > 0
+			end,
+			get_module = function()
+				return { enable = true, additional_vim_regex_highlighting = false }
+			end,
+		}
+	end
+end
 
 -- Custom (Auto) Spacing (in Neovim Buffer) for C/C++
 vim.api.nvim_create_autocmd("FileType", {
@@ -2162,6 +2287,13 @@ vim.api.nvim_set_keymap(
 	"<leader>gvt",
 	":DiffviewToggleFiles<CR>",
 	{ desc = "Toggle Files", noremap = true, silent = true }
+)
+
+vim.api.nvim_set_keymap(
+	"n",
+	"<leader>I",
+	":Inspect<CR>",
+	{ desc = "Inspect Element Under Cursor", noremap = true, silent = true }
 )
 
 vim.api.nvim_set_keymap(
@@ -2378,6 +2510,22 @@ vim.api.nvim_create_autocmd("FileType", {
 
 -- Background Transparency
 vim.api.nvim_set_hl(0, "Normal", { bg = "none" })
+
+vim.lsp.config("roslyn", {
+	on_attach = function()
+		print("This will run when the server attaches!")
+	end,
+	settings = {
+		["csharp|inlay_hints"] = {
+			dotnet_enable_inlay_hints_for_object_creation_parameters = false,
+		},
+		["csharp|code_lens"] = {},
+		["csharp|completion"] = {},
+		["csharp|background_analysis"] = {},
+		["csharp|symbol_search"] = {},
+		["csharp|formatting"] = {},
+	},
+})
 
 -- The line beneath this is called `modeline`. See `:help modeline`
 -- vim: ts=2 sts=2 sw=2 et
